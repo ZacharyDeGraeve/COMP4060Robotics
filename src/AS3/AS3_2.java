@@ -74,7 +74,7 @@ public class AS3_2 {
         CRobotUtil.Log(TAG, "Moving" + jointName);
 
         // Get all poses: min, max, mid
-        CRobotPose midPose = servoRangeTool.getMinPose();
+        CRobotPose midPose = servoRangeTool.getMidPose();
  
         CRobotPose minPose = new CRobotPose();
         minPose.SetPose(_sotaMotion.getDefaultIDs(), midPose.getServoAngles(_sotaMotion.getDefaultIDs()));
