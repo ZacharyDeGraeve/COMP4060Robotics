@@ -64,6 +64,13 @@ public class AS3_2 {
 
         // TODO
         moveJoint(servoRangeTool, CSotaMotion.SV_R_ELBOW, "Right Elbow");
+        moveJoint(servoRangeTool, CSotaMotion.SV_R_SHOULDER, "Right Shoulder");
+        moveJoint(servoRangeTool, CSotaMotion.SV_L_ELBOW, "Left Elbow");
+        moveJoint(servoRangeTool, CSotaMotion.SV_L_SHOULDER, "Left Shoulder");
+        moveJoint(servoRangeTool, CSotaMotion.SV_HEAD_Y, "Head Yaw");
+        moveJoint(servoRangeTool, CSotaMotion.SV_HEAD_R, "Head Roll");
+        moveJoint(servoRangeTool, CSotaMotion.SV_HEAD_P, "Head Pitch");
+        moveJoint(servoRangeTool, CSotaMotion.SV_BODY_Y, "Body");
 
         // Turn off motors
         CRobotUtil.Log(TAG, "Turning off motors");
@@ -81,19 +88,22 @@ public class AS3_2 {
         Short minValue = servoRangeTool.getMinPose().getServoAngle(servoID); // Set just this joint to min value
         minPose.SetPose(new Byte[]{servoID}, new Short[]{minValue});
 
-        // CRobotPose maxPose = new CRobotPose();
+        CRobotPose maxPose = new CRobotPose();
+        maxPose.SetPose(_sotaMotion.getDefaultIDs(), midPose.getServoAngles(_sotaMotion.getDefaultIDs()));
+        Short maxValue = servoRangeTool.getMaxPose().getServoAngle(servoID); // Set just this joint to max value
+        maxPose.SetPose(new Byte[]{servoID}, new Short[]{maxValue});
 
         _sotaMotion.play(minPose, 1000);
         _sotaMotion.waitEndinterpAll(); // also async public boolean isEndInterpAll()
         CRobotUtil.wait(1000); //pause the program / current thread
 
-        // _sotaMotion.play(maxPose, 1000);
-        // _sotaMotion.waitEndinterpAll(); // also async public boolean isEndInterpAll()
-        // CRobotUtil.wait(500); //pause the program / current thread
+        _sotaMotion.play(maxPose, 1000);
+        _sotaMotion.waitEndinterpAll(); // also async public boolean isEndInterpAll()
+        CRobotUtil.wait(500); //pause the program / current thread
 
-        // _sotaMotion.play(midPose, 1000);
-        // _sotaMotion.waitEndinterpAll(); // also async public boolean isEndInterpAll()
-        // CRobotUtil.wait(1000); //pause the program / current thread
+        _sotaMotion.play(midPose, 1000);
+        _sotaMotion.waitEndinterpAll(); // also async public boolean isEndInterpAll()
+        CRobotUtil.wait(1000); //pause the program / current thread
     }
     
     public static void main(String args[]) {

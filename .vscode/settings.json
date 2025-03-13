@@ -1,0 +1,15 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.referencedLibraries": [
+        "c:\\Users\\zacha\\OneDrive - University of Manitoba\\COMP 4060 Robotics for HRI\\COMP4060Robotics\\lib\\core-2.2.jar",
+        "c:\\Users\\zacha\\OneDrive - University of Manitoba\\COMP 4060 Robotics for HRI\\COMP4060Robotics\\lib\\jna-4.1.0.jar",
+        "c:\\Users\\zacha\\OneDrive - University of Manitoba\\COMP 4060 Robotics for HRI\\COMP4060Robotics\\lib\\commons-math3-3.6.1.jar",
+        "c:\\Users\\zacha\\OneDrive - University of Manitoba\\COMP 4060 Robotics for HRI\\COMP4060Robotics\\lib\\Jama-1.0.3.jar",
+        "c:\\Users\\zacha\\OneDrive - University of Manitoba\\COMP 4060 Robotics for HRI\\COMP4060Robotics\\lib\\opencv-310.jar",
+        "c:\\Users\\zacha\\OneDrive - University of Manitoba\\COMP 4060 Robotics for HRI\\COMP4060Robotics\\lib\\javase-2.2.jar",
+        "c:\\Users\\zacha\\OneDrive - University of Manitoba\\COMP 4060 Robotics for HRI\\COMP4060Robotics\\lib\\sotalib.jar",
+        "c:\\Users\\zacha\\OneDrive - University of Manitoba\\COMP 4060 Robotics for HRI\\COMP4060Robotics\\lib\\SRClientHelper.jar"
+    ]
+}
