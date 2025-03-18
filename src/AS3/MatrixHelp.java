@@ -11,25 +11,90 @@ import org.apache.commons.math3.linear.SingularValueDecomposition;
 public class MatrixHelp {  // creates homogeneous rotation matrices
     
     public static RealMatrix rotX(double theta) { // returns a homogenous rotation matrix around the X axis
-        return null; // TODO
+        // Create a 4x4 identity matrix
+        RealMatrix rotMatrix = MatrixUtils.createRealIdentityMatrix(4);
+
+        double cosTheta = Math.cos(theta);
+        double sinTheta = Math.sin(theta);
+        // [1    0       0    0]
+        // [0  cos(θ) -sin(θ) 0]
+        // [0  sin(θ)  cos(θ) 0]
+        // [0    0       0    1]
+        rotMatrix.setEntry(1, 1, cosTheta);
+        rotMatrix.setEntry(1, 2, -sinTheta);
+        rotMatrix.setEntry(2, 1, sinTheta);
+        rotMatrix.setEntry(2, 2, cosTheta);
+
+        return rotMatrix;
     }
 
     public static RealMatrix rotY(double theta) { // returns a homogenous rotation matrix around the Y axis
-        return null; // TODO
+        // Create a 4x4 identity matrix
+        RealMatrix rotMatrix = MatrixUtils.createRealIdentityMatrix(4);
+
+        double cosTheta = Math.cos(theta);
+        double sinTheta = Math.sin(theta);
+        // [ cos(θ) 0 sin(θ) 0]
+        // [   0    1   0    0]
+        // [-sin(θ) 0 cos(θ) 0]
+        // [   0    0   0    1]
+        rotMatrix.setEntry(0, 0, cosTheta);
+        rotMatrix.setEntry(0, 2, sinTheta);
+        rotMatrix.setEntry(2, 0, -sinTheta);
+        rotMatrix.setEntry(2, 2, cosTheta);
+
+        return rotMatrix;
     }
 
     public static RealMatrix rotZ(double theta) { // returns a homogenous rotation matrix around the Z axis
-        return null; // TODO
+        // Create a 4x4 identity matrix
+        RealMatrix rotMatrix = MatrixUtils.createRealIdentityMatrix(4);
+
+        double cosTheta = Math.cos(theta);
+        double sinTheta = Math.sin(theta);
+        // [cos(θ) -sin(θ) 0 0]
+        // [sin(θ)  cos(θ) 0 0]
+        // [  0       0    1 0]
+        // [  0       0    0 1]
+        rotMatrix.setEntry(0, 0, cosTheta);
+        rotMatrix.setEntry(0, 1, -sinTheta);
+        rotMatrix.setEntry(1, 0, sinTheta);
+        rotMatrix.setEntry(1, 1, cosTheta);
+
+        return rotMatrix;
     }
 
     // a 4 translation vector. assume w/normalized.
     public static RealMatrix trans(RealVector t) {return trans(t.getEntry(0), t.getEntry(1), t.getEntry(2));  }
     public static RealMatrix trans(double tx, double ty, double tz) { // returns a homogenous translation matrix
-        return null; // TODO
+        // Create a 4x4 identity matrix
+        RealMatrix transMatrix = MatrixUtils.createRealIdentityMatrix(4);
+        // [1 0 0 tx]
+        // [0 1 0 ty]
+        // [0 0 1 tz]
+        // [0 0 0  1]
+        transMatrix.setEntry(0, 3, tx);
+        transMatrix.setEntry(1, 3, ty);
+        transMatrix.setEntry(2, 3, tz);
+
+        return transMatrix;
     }
 
     public static RealMatrix T(RealMatrix R, double tx, double ty, double tz) { // constructs a Rt matrix
-        return null; // TODO
+        // Combine rotation and translation
+        RealMatrix rtMatrix = MatrixUtils.createRealIdentityMatrix(4);
+        // Copy 3x3 rotation from R to rtMatrix
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                rtMatrix.setEntry(i, j, R.getEntry(i, j));
+            }
+        }
+        // Set translation
+        rtMatrix.setEntry(0, 3, tx);
+        rtMatrix.setEntry(1, 3, ty);
+        rtMatrix.setEntry(2, 3, tz);
+
+        return rtMatrix;
     }
 
 
