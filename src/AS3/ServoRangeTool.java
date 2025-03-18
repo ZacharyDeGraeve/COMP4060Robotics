@@ -16,6 +16,18 @@ import jp.vstone.RobotLib.CSotaMotion;
 
 public class ServoRangeTool implements Serializable {
     private static final long serialVersionUID = 1L;
+    private static final TreeMap<Byte, Double[]> _motorRanges_rad = new TreeMap<>();
+
+    static {
+        _motorRanges_rad.put(CSotaMotion.SV_BODY_Y, new Double[]{-1.077363736, 1.077363736});
+        _motorRanges_rad.put(CSotaMotion.SV_L_SHOULDER, new Double[]{-2.617993878, 1.745329252});
+        _motorRanges_rad.put(CSotaMotion.SV_L_ELBOW, new Double[]{-1.745329252, 1.221730476});
+        _motorRanges_rad.put(CSotaMotion.SV_R_SHOULDER, new Double[]{-1.745329252, 2.617993878});
+        _motorRanges_rad.put(CSotaMotion.SV_R_ELBOW, new Double[]{-1.221730476, 1.745329252});
+        _motorRanges_rad.put(CSotaMotion.SV_HEAD_Y, new Double[]{-1.495996502, 1.495996502});
+        _motorRanges_rad.put(CSotaMotion.SV_HEAD_P, new Double[]{-2.617993878, 2.617993878});
+        _motorRanges_rad.put(CSotaMotion.SV_HEAD_R, new Double[]{-1.495996502, 1.495996502});
+    }
     
     private Short[] _minpos = null;  // internal arrays for precalcualted values
     private Short[] _maxpos = null;
@@ -109,8 +121,8 @@ public class ServoRangeTool implements Serializable {
 
     private double posToRad(Byte servoID, Short pos) { // convert motor position to angle, in radians 
         Byte index = _IDtoIndex.get(servoID);
-        double minRad = -Math.PI;
-        double maxRad = Math.PI;
+        double minRad = _motorRanges_rad.get(servoID)[0];
+        double maxRad = _motorRanges_rad.get(servoID)[1];
         double minPos = _minpos[index];
         double maxPos = _maxpos[index];
         return ((pos - minPos)/(maxPos - minPos))*(maxRad - minRad) + minRad;
@@ -118,8 +130,8 @@ public class ServoRangeTool implements Serializable {
 
     private short radToPos(Byte servoID, double angle) { // convert angles, in radians, to motor position
         Byte index = _IDtoIndex.get(servoID);
-        double minRad = -Math.PI;
-        double maxRad = Math.PI;
+        double minRad = _motorRanges_rad.get(servoID)[0];
+        double maxRad = _motorRanges_rad.get(servoID)[1];
         double minPos = _minpos[index];
         double maxPos = _maxpos[index];
 
@@ -128,17 +140,21 @@ public class ServoRangeTool implements Serializable {
     
 	///==================== Pretty Print
     /// ///====================
-	private String formattedLine(String title, Byte servoID, Short[] minpos, Short[] maxpos, Short[] middle, Short[] pos) {
+	private String formattedLine(String title, Byte servoID, Short[] minpos, Short[] maxpos, Short[] middle, double[] pos) {
 		// int i = 0;
         int i = _IDtoIndex.get(servoID);
-        double rad = 0;
-        if (pos != null) rad = posToRad(servoID, pos[i]);
-		String format = "%14s %8d %8d %8d    %.2f rad";
-		return String.format(format, title, minpos[i], middle[i], maxpos[i], rad);
+        if (pos == null) {
+            String format = "%14s %8d %8d %8d";
+		    return String.format(format, title, minpos[i], middle[i], maxpos[i]);
+        }
+        else {
+		    String format = "%14s %8d %8d %8d    %.2f rad";
+		    return String.format(format, title, minpos[i], middle[i], maxpos[i], pos[i]);
+        }
 	}
 
     public void printMotorRanges() {printMotorRanges(null);}
-	public void printMotorRanges(Short[] pos) {  // will print the current position as given by the pos array
+	public void printMotorRanges(double[] pos) {  // will print the current position as given by the pos array
 		System.out.println("-------------");
 		System.out.println( formattedLine("Body Y: ", CSotaMotion.SV_BODY_Y, _minpos, _maxpos, _midpos, pos));
 		System.out.println( formattedLine("L Shoulder: ", CSotaMotion.SV_L_SHOULDER, _minpos, _maxpos, _midpos, pos));

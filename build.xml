@@ -7,7 +7,7 @@
         <!--ip -->
         <!--- CONFIGURE THIS for your Sota -->
         <!-- <property name="scp.server" value="10.0.0.157"/>   -->
-        <property name="scp.server" value="10.151.20.196"/>   
+        <property name="scp.server" value="192.168.100.199"/>   
          
         <!--scp credentials -->
         <property name="scp.edison.user" value="root"  />
@@ -100,6 +100,11 @@
                 <antcall target="__make_jar">
                         <param name="jar.class" value="AS3.AS3_2" />
                         <param name="jar.name" value="AS3_2.jar" />
+                </antcall>
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3.AS3_3" />
+                        <param name="jar.name" value="AS3_3.jar" />
                 </antcall>
 
 
