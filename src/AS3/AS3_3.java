@@ -35,11 +35,9 @@ public class AS3_3 {
 			while (!motion.isButton_Power()) {  // stop when power button pressed
 				System.out.print("\033[H"); // move cursor to top left before redrawing
 
-				CRobotPose pose = motion.getReadPose();
-
                 // Print the motor positions
                 CRobotUtil.Log(TAG, "Loaded servo positions:");
-				servoRangeTool.printMotorRanges(servoRangeTool.calcAngles(pose).toArray());
+				servoRangeTool.printMotorRanges(motion.getReadpos());
 
 				System.out.flush();  // force stdout flush before waiting to avoid tearing / flicker.
 				CRobotUtil.wait(1000 / HZ);

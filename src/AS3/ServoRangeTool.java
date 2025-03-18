@@ -140,21 +140,17 @@ public class ServoRangeTool implements Serializable {
     
 	///==================== Pretty Print
     /// ///====================
-	private String formattedLine(String title, Byte servoID, Short[] minpos, Short[] maxpos, Short[] middle, double[] pos) {
+	private String formattedLine(String title, Byte servoID, Short[] minpos, Short[] maxpos, Short[] middle, Short[] pos) {
 		// int i = 0;
         int i = _IDtoIndex.get(servoID);
-        if (pos == null) {
-            String format = "%14s %8d %8d %8d";
-		    return String.format(format, title, minpos[i], middle[i], maxpos[i]);
-        }
-        else {
-		    String format = "%14s %8d %8d %8d    %.2f rad";
-		    return String.format(format, title, minpos[i], middle[i], maxpos[i], pos[i]);
-        }
+        double rad = 0;
+        if (pos != null) rad = posToRad(servoID, pos[i]);
+		String format = "%14s %8d %8d %8d    %.2f rad";
+		return String.format(format, title, minpos[i], middle[i], maxpos[i], rad);
 	}
 
     public void printMotorRanges() {printMotorRanges(null);}
-	public void printMotorRanges(double[] pos) {  // will print the current position as given by the pos array
+	public void printMotorRanges(Short[] pos) {  // will print the current position as given by the pos array
 		System.out.println("-------------");
 		System.out.println( formattedLine("Body Y: ", CSotaMotion.SV_BODY_Y, _minpos, _maxpos, _midpos, pos));
 		System.out.println( formattedLine("L Shoulder: ", CSotaMotion.SV_L_SHOULDER, _minpos, _maxpos, _midpos, pos));

@@ -107,6 +107,11 @@
                         <param name="jar.name" value="AS3_3.jar" />
                 </antcall>
 
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3.AS3_4" />
+                        <param name="jar.name" value="AS3_4.jar" />
+                </antcall>
+
 
                 <!-- put other programs here -->
                 <!-- <antcall target="__make_jar">  
