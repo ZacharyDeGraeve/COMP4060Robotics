@@ -119,22 +119,36 @@ public class ServoRangeTool implements Serializable {
         return makePose(pos);
     }
 
-    private double posToRad(Byte servoID, Short pos) { // convert motor position to angle, in radians 
+    private double posToRad(Byte servoID, Short pos) { 
         Byte index = _IDtoIndex.get(servoID);
         double minRad = _motorRanges_rad.get(servoID)[0];
         double maxRad = _motorRanges_rad.get(servoID)[1];
         double minPos = _minpos[index];
         double maxPos = _maxpos[index];
-        return ((pos - minPos)/(maxPos - minPos))*(maxRad - minRad) + minRad;
+        
+        // Standard calculation for most servos
+        double angle = ((pos - minPos)/(maxPos - minPos))*(maxRad - minRad) + minRad;
+        
+        // For left arm servos, simply negate the computed angle
+        if (servoID == CSotaMotion.SV_L_SHOULDER) {
+            angle = -angle;
+        }
+        
+        return angle;
     }
 
-    private short radToPos(Byte servoID, double angle) { // convert angles, in radians, to motor position
+    private short radToPos(Byte servoID, double angle) {
         Byte index = _IDtoIndex.get(servoID);
         double minRad = _motorRanges_rad.get(servoID)[0];
         double maxRad = _motorRanges_rad.get(servoID)[1];
         double minPos = _minpos[index];
         double maxPos = _maxpos[index];
-
+    
+        // // For left arm servos, negate the angle before conversion
+        if (servoID == CSotaMotion.SV_L_SHOULDER) {
+            angle = -angle;
+        }
+    
         return (short) (((angle - minRad)/(maxRad - minRad))*(maxPos - minPos) + minPos);
     }
     
