@@ -1,6 +1,8 @@
 package AS3;
 
 import java.util.TreeMap;
+
+import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import AS3.Frames.FrameKeys;
@@ -24,9 +26,9 @@ public class SotaInverseK {
     SotaInverseK(RealVector currentAngles, FrameKeys frameType) {
         J = new TreeMap[JType.values().length];
         Jinv = new TreeMap[JType.values().length];
-        for (int i=0; i < JType.values().length; i++) {
-            J[i] = new TreeMap<FrameKeys, RealMatrix>();
-            Jinv[i] = new TreeMap<FrameKeys, RealMatrix>();
+        for (int j=0; j < JType.values().length; j++) {
+            J[j] = new TreeMap<FrameKeys, RealMatrix>();
+            Jinv[j] = new TreeMap<FrameKeys, RealMatrix>();
         }
        makeJacobian(currentAngles, frameType);
     }
@@ -34,7 +36,61 @@ public class SotaInverseK {
     // Makes both the jacobian and inverse from the current configuration for the
     // given frame type. Creates both JTypes.
     private void makeJacobian(RealVector currentAngles, FrameKeys frameType) {
-        // TODO
+        // Get the motor indices specific to this frame type (L_HAND, R_HAND or HEAD)
+        int[] motorIndices = frameType.motorindices;
+        int numJoints = frameType.motorindices.length;
+        
+        // Create Jacobian matrices for position (O) and orientation (R)
+        // Each (L_HAND, R_HAND or HEAD) has 3 output dimensions (x,y,z or roll,pitch,yaw) and columns for relevant joints only
+        RealMatrix jacobianO = MatrixUtils.createRealMatrix(JType.OUT_DIM, numJoints);
+        RealMatrix jacobianR = MatrixUtils.createRealMatrix(JType.OUT_DIM, numJoints);
+        
+        // Calculate FK for the current angles to get the base state
+        SotaForwardK baseFk = new SotaForwardK(currentAngles);
+        
+        // Extract the current position and orientation for the specified frame
+        RealVector basePos = MatrixHelp.getTrans(baseFk.frames.get(frameType));
+        RealVector baseOrientation = MatrixHelp.getYPRVec(baseFk.frames.get(frameType));
+        
+        // For each relevant joint, calculate its column in the Jacobian
+        for (int j = 0; j < numJoints; j++) {
+            int jointIdx = motorIndices[j];  // Get the actual motor index
+            
+            // Create a copy of current angles to perturb
+            RealVector perturbedAngles = currentAngles.copy();
+            
+            // Apply a small perturbation to this joint only
+            perturbedAngles.setEntry(jointIdx, perturbedAngles.getEntry(jointIdx) + NUMERICAL_DELTA_rad);
+            
+            // Calculate FK with the perturbed angle
+            SotaForwardK perturbedFk = new SotaForwardK(perturbedAngles);
+            
+            // Get the perturbed position and orientation
+            RealVector perturbedPos = MatrixHelp.getTrans(perturbedFk.frames.get(frameType));
+            RealVector perturbedOrientation = MatrixHelp.getYPRVec(perturbedFk.frames.get(frameType));
+            
+            // Calculate the difference (this approximates the partial derivative)
+            RealVector posDiff = perturbedPos.subtract(basePos);
+            RealVector orientationDiff = perturbedOrientation.subtract(baseOrientation);
+            
+            // Normalize by the perturbation amount to get the derivative
+            posDiff = posDiff.mapDivide(NUMERICAL_DELTA_rad);
+            orientationDiff = orientationDiff.mapDivide(NUMERICAL_DELTA_rad);
+            
+            // Set this column in the Jacobian matrices
+            for (int i = 0; i < JType.OUT_DIM; i++) {
+                jacobianO.setEntry(i, j, posDiff.getEntry(i));
+                jacobianR.setEntry(i, j, orientationDiff.getEntry(i));
+            }
+        }
+        
+        // Store the Jacobians
+        J[JType.O.ordinal()].put(frameType, jacobianO);
+        J[JType.R.ordinal()].put(frameType, jacobianR);
+        
+        // Calculate and store the pseudo-inverses
+        Jinv[JType.O.ordinal()].put(frameType, MatrixHelp.pseudoInverse(jacobianO));
+        Jinv[JType.R.ordinal()].put(frameType, MatrixHelp.pseudoInverse(jacobianR));
     }
     
     // calculates the target absolute pose from the current pose, plus the given delta
