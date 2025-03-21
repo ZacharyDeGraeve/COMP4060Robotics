@@ -4,13 +4,16 @@ import java.util.TreeMap;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import AS3.Frames.FrameKeys;
+import AS3.SotaForwardK;
 
 public class SotaInverseK {
 
     private static double NUMERICAL_DELTA_rad = 1e-10;
     private static double DISTANCE_THRESH = 1e-3; // 1mm
+    private static int MAX_ITERATIONS = 50;
 
     enum JType {  // We separate the jacobians into origin and rotation components to simplify the problem
         O, // origin
@@ -102,7 +105,61 @@ public class SotaInverseK {
 
     // solves for the target pose on the given frame and type, starting at the current angle configuration.
     static public RealVector solve(FrameKeys frameType, JType jtype, RealVector targetPose, RealVector curMotorAngles) {
-        RealVector solution = null;
-        return solution;
+        RealVector solution = curMotorAngles.copy();
+        RealVector theta_i = curMotorAngles.copy();
+        SotaInverseK IK = null;
+        SotaForwardK FK = new SotaForwardK(theta_i);
+        RealVector FK_solved = null;
+
+        // set FK to be based on the correct JType
+        if (jtype == JType.O) {
+            FK_solved = MatrixHelp.getTrans(FK.frames.get(frameType));
+        }
+        else if (jtype == JType.R) {
+            FK_solved = MatrixHelp.getYPRVec(FK.frames.get(frameType));
+        }
+
+        // Create a frame-specific theta
+        RealVector frameTheta = new ArrayRealVector(frameType.motorindices.length);
+
+        // Map the full theta_i to the frame-specific theta for the affected motors
+        for (int i = 0; i < frameType.motorindices.length; i++) {
+            frameTheta.setEntry(i, theta_i.getEntry(frameType.motorindices[i]));
+        }
+
+        // Calculate starting error
+        RealVector error = targetPose.subtract(FK_solved.getSubVector(0,3));
+        RealVector min_error = error.copy();
+
+        for (int i = 0; i < MAX_ITERATIONS && error.getNorm() > DISTANCE_THRESH; i++) {
+            IK = new SotaInverseK(theta_i, frameType);
+            IK.makeJacobian(theta_i, frameType);
+            frameTheta = frameTheta.add(IK.Jinv[jtype.ordinal()].get(frameType).operate(error));
+
+            // Update the full theta_i with the new values
+            for (int j = 0; j < frameType.motorindices.length; j++) {
+                theta_i.setEntry(frameType.motorindices[j], frameTheta.getEntry(j));
+            }
+
+            FK = new SotaForwardK(theta_i);
+            if (jtype == JType.O) {
+                FK_solved = MatrixHelp.getTrans(FK.frames.get(frameType));
+            }
+            else if (jtype == JType.R) {
+                FK_solved = MatrixHelp.getYPRVec(FK.frames.get(frameType));
+            }
+
+            error = targetPose.subtract(FK_solved.getSubVector(0,3));
+
+            if (error.getNorm() > DISTANCE_THRESH) {
+                return theta_i;
+            }
+            else if (error.getNorm() < min_error.getNorm()) {
+                min_error = error.copy();
+                solution = theta_i.copy();
+            }
+        }
+        
+        return solution; // Return the best solution found
     }   
 }

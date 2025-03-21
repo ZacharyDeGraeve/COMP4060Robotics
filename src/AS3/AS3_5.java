@@ -130,7 +130,7 @@ public class AS3_5 {
 			if (h_angle > 1) h_speed *= -1;
 			if (h_angle < -1) h_speed *= -1;
 
-			CRobotUtil.wait(20); // increasa to a high value can help with debugging.
+			CRobotUtil.wait(20); // increase to a high value can help with debugging.
 		}
 	}
 
