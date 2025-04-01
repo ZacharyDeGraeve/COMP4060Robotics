@@ -1,0 +1,31 @@
+
+root@edison:~/sotaprograms/jars$ java -jar AS3_1.jar
+[Info][AS3_1]Start AS3_1
+[Info][CRobotSock]Connected server
+[Info][AS3_1]connected AS3_1
+[Info][CRobotMotion]MasterCtrlPeriod 16666
+[Info][AS3_1]Rev. 32
+[Info][AS3_1]Startup Successful
+[Info][AS3_1]Servo Range Tool created
+-------------
+      Body Y:        57       57       57    0.00 rad
+  L Shoulder:      -701     -701     -701    0.00 rad
+     L Elbow:      -240     -240     -240    0.00 rad
+  R Shoulder:       595      595      595    0.00 rad
+     R Elbow:       426      426      426    0.00 rad
+      Head Y:       -24      -24      -24    0.00 rad
+      Head P:       -18      -18      -18    0.00 rad
+      Head R:       -21      -21      -21    0.00 rad
+[Info][AS3_1]Turning off motors. Manually move the robot joints.
+Servo ranges saved to servo_ranges.dat
+[Info][AS3_1]Motor range saved
+-------------
+      Body Y:     -1356      -30     1296    0.00 rad
+  L Shoulder:     -1465     -305      854    0.00 rad
+     L Elbow:      -932     -118      696    0.00 rad
+  R Shoulder:      -866      293     1452    0.00 rad
+     R Elbow:      -666      140      946    0.00 rad
+      Head Y:     -1486        1     1488    0.00 rad
+      Head P:      -327      -92      143    0.00 rad
+      Head R:      -284       12      308    0.00 rad
+[Info][AS3_1]Program End Reached

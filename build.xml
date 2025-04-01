@@ -1,0 +1,158 @@
+<!-- File originally created by Jonathan Placatka-->
+<project name="SotaPrograms" default="all_programs" basedir=".">
+
+        <!-- ================== -->
+        <!-- USER CONFIGURATION -->
+
+        <!--ip -->
+        <!--- CONFIGURE THIS for your Sota -->
+        <!-- <property name="scp.server" value="10.0.0.157"/>  -->
+        <property name="scp.server" value="192.168.100.199"/>     
+         
+        <!--scp credentials -->
+        <property name="scp.edison.user" value="root"  />
+        <property name="scp.edison.pass" value="edison00" />
+
+        <!--target folders -->
+        <property name="sota.basedir" value="/home/root/sotaprograms" />
+
+        <!--dir structure -->
+        <property name="src.dir" value="src"/>
+        <property name="bin.dir" value="bin"/>
+        <property name="lib.dir" value="lib"/>
+        <property name="jars.dir" value="jars"/>
+        <property name="resources.dir" value="resources"/>
+        <property name="javadoc.dir" value="docs"/>
+        
+        <property name="remotelib.dir" value="/home/vstone/lib"/>
+
+        <!--runnable classpath. Update if you need new libraries -->
+        <property name="jar.classpath"
+         value=". /home/vstone/lib/commons-math3-3.6.1.jar /home/vstone/lib/sotalib.jar /home/vstone/lib/SRClientHelper.jar /home/vstone/lib/core-2.2.jar /home/vstone/lib/javase-2.2.jar  /home/vstone/lib/jna-4.1.0.jar /home/vstone/lib/gson-2.6.1.jar /usr/local/share/OpenCV/java/opencv-310.jar" />
+                                   
+        <path id="build.lib">   <!-- include all jars in the listed lib dir into our classpath-->
+                <fileset dir="${lib.dir}" includes="*.jar" />
+        </path>
+
+        <!-- ============ -->
+        <!-- TARGETS for you to use-->
+
+        <target name="clean">
+                <delete dir="${bin.dir}"/>
+                <delete dir="${jars.dir}"/>
+                <echo>delete complete!</echo>
+        </target>
+
+        <target name="clean-remote">
+                <!-- make the folder if it doesn't exist -->
+                <sshexec
+                        host="${scp.server}"
+                        username="${scp.edison.user}"
+                        password="${scp.edison.pass}"
+                        command="rm -rf ${sota.basedir}"
+                        trust="true" />
+                <echo>remote delete complete!</echo>
+        </target>
+
+        <target name="compile">
+                <mkdir dir="${bin.dir}"/>
+                <javac includeantruntime="false" classpathref="build.lib" srcdir="${src.dir}" destdir="${bin.dir}" encoding="utf-8" release="8" debug="true" bootclasspath="lib/rt.jar">
+                        <compilerarg value="-Xlint:unchecked"/>  <!-- suppress warnings about deprecated java 8, seems to not work -->
+                </javac>
+        </target>
+
+
+        <!-- ============ -->
+        <target name="__make_jar">  <!-- internal use -->
+                <jar jarfile="${jars.dir}/${jar.name}" basedir="${bin.dir}">
+                        <manifest>
+                                <attribute name="Main-Class" value="${jar.class}"/>
+                                <attribute name="Class-Path" value="${jar.classpath}"/>
+                        </manifest>
+                </jar>
+        </target>
+        <target name="make_jars" depends="compile">
+
+                <!-- Make a target for each program -->
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.Sample" />
+                        <param name="jar.name" value="sample4060-sample.jar" />
+                </antcall>
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.MotorStatesLive" />
+                        <param name="jar.name" value="sample4060-motorstateslive.jar" />
+                </antcall> -->
+
+
+                <!-- assignment JARs -->
+                
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3.AS3_5" />
+                        <param name="jar.name" value="AS3_5.jar" />
+                </antcall>
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3.AS3_1" />
+                        <param name="jar.name" value="AS3_1.jar" />
+                </antcall>
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3.AS3_2" />
+                        <param name="jar.name" value="AS3_2.jar" />
+                </antcall>
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3.AS3_3" />
+                        <param name="jar.name" value="AS3_3.jar" />
+                </antcall>
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3.AS3_4" />
+                        <param name="jar.name" value="AS3_4.jar" />
+                </antcall>
+
+
+                <!-- put other programs here -->
+                <!-- <antcall target="__make_jar">  
+                        <param name="jar.class" value="sample4060.Sample" />
+                        <param name="jar.name" value="sample4060.jar" />
+                </antcall> -->
+        </target>
+
+        <target name="upload_jars">
+
+                <!-- make the folder if it doesn't exist -->
+                <sshexec
+                        host="${scp.server}"
+                        username="${scp.edison.user}"
+                        password="${scp.edison.pass}"
+                        command="mkdir -p ${sota.basedir}/${jars.dir}"
+                        trust="true" />
+    
+                <scp todir="${scp.edison.user}:${scp.edison.pass}@${scp.server}:${sota.basedir}/${jars.dir}" trust="yes" sftp="true" >       
+                        <fileset dir="${jars.dir}"/>
+                </scp>
+        </target>
+
+        <target name="upload_resources">
+                <!-- make the folder if it doesn't exist -->
+                <sshexec
+                        host="${scp.server}"
+                        username="${scp.edison.user}"
+                        password="${scp.edison.pass}"
+                        command="mkdir -p ${sota.basedir}/${resources.dir}"
+                        trust="true" />
+    
+                <scp todir="${scp.edison.user}:${scp.edison.pass}@${scp.server}:${sota.basedir}/${resources.dir}" trust="yes" sftp="true" >       
+                        <fileset dir="${resources.dir}"/>
+                </scp>
+   
+                <scp todir="${scp.edison.user}:${scp.edison.pass}@${scp.server}:${remotelib.dir}" trust="yes" sftp="true" >       
+                        <fileset dir="${lib.dir}"/>
+                </scp>
+        </target>
+
+        <target name="compile_and_send_jars" depends="compile, make_jars, upload_jars" description="Compile all into Jars and upload">
+        </target>
+</project>
