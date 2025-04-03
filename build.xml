@@ -6,8 +6,8 @@
 
         <!--ip -->
         <!--- CONFIGURE THIS for your Sota -->
-        <!-- <property name="scp.server" value="10.0.0.157"/>  -->
-        <property name="scp.server" value="192.168.100.199"/>     
+        <property name="scp.server" value="192.168.100.199"/>  
+        <!-- <property name="scp.server" value="10.127.49.213"/>    -->
          
         <!--scp credentials -->
         <property name="scp.edison.user" value="root"  />
@@ -28,10 +28,10 @@
 
         <!--runnable classpath. Update if you need new libraries -->
         <property name="jar.classpath"
-         value=". /home/vstone/lib/commons-math3-3.6.1.jar /home/vstone/lib/sotalib.jar /home/vstone/lib/SRClientHelper.jar /home/vstone/lib/core-2.2.jar /home/vstone/lib/javase-2.2.jar  /home/vstone/lib/jna-4.1.0.jar /home/vstone/lib/gson-2.6.1.jar /usr/local/share/OpenCV/java/opencv-310.jar" />
-                                   
+         value=". /home/vstone/lib/commons-math3-3.6.1.jar /home/vstone/lib/sotalib.jar /home/vstone/lib/SRClientHelper.jar /home/vstone/lib/core-2.2.jar /home/vstone/lib/javase-2.2.jar  /home/vstone/lib/jna-4.1.0.jar /home/vstone/lib/gson-2.6.1.jar /usr/local/share/OpenCV/java/opencv-310.jar /home/vstone/lib/marytts-runtime-5.2-jar-with-dependencies.jar /home/vstone/lib/marytts-lang-en-5.2.jar /home/vstone/lib/voice-dfki-prudence-hsmm-5.2.jar /home/vstone/lib/voice-cmu-slt-hsmm-5.2.jar /home/vstone/lib/gdx-1.9.9.jar /home/vstone/lib/gdx-1.9.9-javadoc.jar /home/vstone/lib/gdx-ai-1.8.2.jar /home/vstone/lib/gdx-ai-1.8.2-javadoc.jar" />                                   
         <path id="build.lib">   <!-- include all jars in the listed lib dir into our classpath-->
                 <fileset dir="${lib.dir}" includes="*.jar" />
+                <fileset dir="${lib.dir}" includes="*.so"/>
         </path>
 
         <!-- ============ -->
@@ -74,7 +74,7 @@
         <target name="make_jars" depends="compile">
 
                 <!-- Make a target for each program -->
-                <!-- <antcall target="__make_jar">
+                <antcall target="__make_jar">
                         <param name="jar.class" value="sample4060.Sample" />
                         <param name="jar.name" value="sample4060-sample.jar" />
                 </antcall>
@@ -82,36 +82,82 @@
                 <antcall target="__make_jar">
                         <param name="jar.class" value="sample4060.MotorStatesLive" />
                         <param name="jar.name" value="sample4060-motorstateslive.jar" />
+                </antcall>
+
+
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3.MatrixHelp" />
+                        <param name="jar.name" value="matrixhelp.jar" />
                 </antcall> -->
 
-
-                <!-- assignment JARs -->
-                
                 <antcall target="__make_jar">
-                        <param name="jar.class" value="AS3.AS3_5" />
-                        <param name="jar.name" value="AS3_5.jar" />
+                        <param name="jar.class" value="sample4060.PocketSphinxkws" />
+                        <param name="jar.name" value="sample4060-sphinxkws.jar" />
                 </antcall>
 
                 <antcall target="__make_jar">
-                        <param name="jar.class" value="AS3.AS3_1" />
+                        <param name="jar.class" value="sample4060.PocketSphinxlm" />
+                        <param name="jar.name" value="sample4060-sphinxlm.jar" />
+                </antcall>
+                
+                
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.FaceDetection" />
+                        <param name="jar.name" value="sample4060-face.jar" />
+                </antcall>
+
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.SotaTestProgram" />
+                        <param name="jar.name" value="sample4060-sotaTest.jar" />
+                </antcall>
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="jp.vstone.sotasample.RecordMotion" />
+                        <param name="jar.name" value="sample4060-recordMotion.jar" />
+                </antcall> -->
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.marysample" />
+                        <param name="jar.name" value="sample4060-marrytts.jar" />
+                </antcall>
+
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.marysample" />
+                        <param name="jar.name" value="sample4060-marrytts.jar" />
+                </antcall>
+
+                <!-- assignment 4 JARs -->
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS4.Main" />
+                        <param name="jar.name" value="AS4.jar" />
+                </antcall>
+
+                <!-- assignment 3 JARs -->
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3Solution.AS3_1" />
                         <param name="jar.name" value="AS3_1.jar" />
                 </antcall>
 
                 <antcall target="__make_jar">
-                        <param name="jar.class" value="AS3.AS3_2" />
+                        <param name="jar.class" value="AS3Solution.AS3_2" />
                         <param name="jar.name" value="AS3_2.jar" />
                 </antcall>
 
                 <antcall target="__make_jar">
-                        <param name="jar.class" value="AS3.AS3_3" />
+                        <param name="jar.class" value="AS3Solution.AS3_3" />
                         <param name="jar.name" value="AS3_3.jar" />
                 </antcall>
-
+                
                 <antcall target="__make_jar">
-                        <param name="jar.class" value="AS3.AS3_4" />
+                        <param name="jar.class" value="AS3Solution.AS3_4" />
                         <param name="jar.name" value="AS3_4.jar" />
                 </antcall>
 
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS3Solution.AS3_5" />
+                        <param name="jar.name" value="AS3_5.jar" />
+                </antcall>
 
                 <!-- put other programs here -->
                 <!-- <antcall target="__make_jar">  

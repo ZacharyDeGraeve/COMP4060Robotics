@@ -3,13 +3,20 @@
         "src"
     ],
     "java.project.referencedLibraries": [
-        "c:\\Users\\Nathan\\Documents\\GitHub\\COMP4060Robotics\\lib\\opencv-310.jar",
-        "c:\\Users\\Nathan\\Documents\\GitHub\\COMP4060Robotics\\lib\\core-2.2.jar",
-        "c:\\Users\\Nathan\\Documents\\GitHub\\COMP4060Robotics\\lib\\Jama-1.0.3.jar",
-        "c:\\Users\\Nathan\\Documents\\GitHub\\COMP4060Robotics\\lib\\sotalib.jar",
-        "c:\\Users\\Nathan\\Documents\\GitHub\\COMP4060Robotics\\lib\\SRClientHelper.jar",
-        "c:\\Users\\Nathan\\Documents\\GitHub\\COMP4060Robotics\\lib\\commons-math3-3.6.1.jar",
-        "c:\\Users\\Nathan\\Documents\\GitHub\\COMP4060Robotics\\lib\\javase-2.2.jar",
-        "c:\\Users\\Nathan\\Documents\\GitHub\\COMP4060Robotics\\lib\\jna-4.1.0.jar"
+        "lib\\commons-math3-3.6.1.jar",
+        "lib\\jna-4.1.0.jar",
+        "lib\\javase-2.2.jar",
+        "lib\\SRClientHelper.jar",
+        "lib\\opencv-310.jar",
+        "lib\\core-2.2.jar",
+        "lib\\sotalib.jar",
+        "lib\\marytts-runtime-5.2-jar-with-dependencies.jar",
+        "lib\\voice-cmu-slt-hsmm-5.2.jar",
+        "lib\\voice-dfki-prudence-hsmm-5.2.jar",
+        "lib\\marytts-lang-en-5.2.jar",
+        "lib\\gdx-1.9.9.jar",
+        "lib\\gdx-1.9.9-javadoc.jar",
+        "lib\\gdx-ai-1.8.2.jar",
+        "lib\\gdx-ai-1.8.2-javadoc.jar"
     ]
 }

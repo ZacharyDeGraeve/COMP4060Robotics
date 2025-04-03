@@ -1,0 +1,6 @@
+yes /1e-10/
+yeah /1e-10/
+okay /1e-10/
+sure /1e-10/
+of course /1e-65/
+sounds good /1e-65/
