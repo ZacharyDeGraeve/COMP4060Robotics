@@ -70,7 +70,7 @@ public class BedtimeBot {
     public void selectStory() {
         if (ttsHelper != null) {
             try {
-                ttsHelper.speak("Ok. Let me pick a story");
+                ttsHelper.speakAsync("Ok. Let me pick a story");
                 System.out.println("SOTA: Ok. Let me pick a story");
 
                 if (gesture != null) {
@@ -91,7 +91,7 @@ public class BedtimeBot {
 
         if (ttsHelper != null) {
             try {
-                ttsHelper.speak("I picked Snow White");
+                ttsHelper.speakAsync("I picked Snow White");
                 System.out.println("SOTA: I picked Snow White");
             } catch (Exception e) {
                 System.err.println("Error speaking: " + e.getMessage());
@@ -102,7 +102,7 @@ public class BedtimeBot {
     public void onLaunch(String greeting) {
         if (ttsHelper != null) {
             try {
-                ttsHelper.speak(greeting);
+                ttsHelper.speakAsync(greeting);
                 System.out.println("SOTA: " + greeting);
 
                 if (gesture != null) {

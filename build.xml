@@ -155,7 +155,18 @@
                         <param name="jar.name" value="sample4060-marrytts.jar" />
                 </antcall> -->
 
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.CameraSnapTest" />
+                        <param name="jar.name" value="sample4060-cam.jar" />
+                </antcall> -->
+
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="jp.vstone.sotasample.FaceTrackingSample" />
+                        <param name="jar.name" value="FaceTrackingSample.jar" />
+                </antcall> -->
+
                 <!-- assignment 4 JARs -->
+
                 <antcall target="__make_jar">
                         <param name="jar.class" value="AS4.Main" />
                         <param name="jar.name" value="AS4.jar" />

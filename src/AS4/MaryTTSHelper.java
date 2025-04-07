@@ -82,10 +82,10 @@ public class MaryTTSHelper {
         CPlayWave.PlayWave_wait(audioData);
     }
     
-    // public void speakAsync(String text) throws SynthesisException, IOException {
-    //     byte[] audioData = getAudioData(text);
-    //     CPlayWave.PlayWave(audioData);
-    // }
+    public void speakAsync(String text) throws SynthesisException, IOException {
+        byte[] audioData = getAudioData(text);
+        CPlayWave.PlayWave(audioData);
+    }
     
     private byte[] getAudioData(String text) throws SynthesisException, IOException {
         // Create cache key based on text, voice, and effects
