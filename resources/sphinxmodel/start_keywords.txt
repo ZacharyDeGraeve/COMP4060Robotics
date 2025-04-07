@@ -1,1 +1,2 @@
-stop /1e-10/
+story /1e-10/
+tell a story /1e-40/

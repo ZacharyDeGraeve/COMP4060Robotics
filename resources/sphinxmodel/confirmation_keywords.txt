@@ -3,4 +3,12 @@ yeah /1e-10/
 okay /1e-10/
 sure /1e-10/
 of course /1e-65/
+yep /1e-10/
+correct /1e-10/
+affirmative /1e-10/
 sounds good /1e-65/
+no /1e-10/
+nope /1e-10/
+nevermind /1e-10/
+negative /1e-10/
+not /1e-10/

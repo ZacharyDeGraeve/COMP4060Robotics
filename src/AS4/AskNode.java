@@ -6,8 +6,8 @@ import com.badlogic.gdx.ai.btree.Task;
 public class AskNode extends LeafTask<BedtimeBot> {
     @Override
     public Status execute() {
-        getObject().askUser("Would you like to hear another story?");
-        if (getObject().waitForKeyword("confirmation_keywords.txt")) {
+        getObject().askUser("Would you like to listen to another story?");
+        if (getObject().waitForYesOrNo("confirmation_keywords.txt")) {
             return Status.SUCCEEDED;  // Returns to StorySelectionNode
         } else {
             return Status.FAILED;  // Causes system shutdown

@@ -12,7 +12,7 @@ public class StorySelectionNode extends LeafTask<BedtimeBot> {
             e.printStackTrace();
         }
         
-        getObject().askUser("Would you like to hear this story?");
+        getObject().askUser("Would you like to listen to this story?");
         return Status.SUCCEEDED;
     }
 
