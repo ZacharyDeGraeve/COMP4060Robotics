@@ -42,27 +42,34 @@ public class WriteWavFiles {
             System.out.println(mary.getAudioEffects());
 
             // effects can be used to shape your voice. 
-            // section 3 of this site has the old docs for it: https://myrobotlab.org/service/MarySpeech
-            
-            // mary.setAudioEffects("FIRFilter(type:3;fc1:500.0;fc2:2000.0)");   // finite impulse response (FIR) filter, advanced
-            // mary.setAudioEffects("f0Add(f0add:-100)");
-            // mary.setAudioEffects("f0Add(f0add:100)");
-            // mary.setAudioEffects("TractScaler(amount:.5)");
-            // mary.setAudioEffects("f0Scale(f0scale:2)");  // flatness
-            // mary.setAudioEffects("Lowpass(cutoff:500.0)");
-            // mary.setAudioEffects("Reverb(reverbAmount:0.5)");
-            // mary.setAudioEffects("Whisper(amount:100)");
-            // mary.setAudioEffects("Stadium(amount:100)");
-            // mary.setAudioEffects("Chorus(amount:100)");
-            // mary.setAudioEffects("JetPilot(amount:100)");
-            // mary.setAudioEffects("Rate(durScale:1.5)"); // doesn't seem to work with the default voice
- 
-            // mary.setAudioEffects("Volume(amount:2.0)+Rate(durScale:1.5)+F0Scale(f0Scale:1.2)"); // you can combine effects using the syntax here in this example
-            // mary.setAudioEffects("Volume(amount:1.0)+Robot(amount:100)+TractScaler(amount:.5)");
-            mary.setAudioEffects("f0Scale(f0scale:2)+TractScaler(amount:1.2)");
+            mary.setAudioEffects("f0Scale(f0scale:0.9)+TractScaler(amount:1)+Rate(durScale:0.3)+Robot(amount:0.0)+Volume(amount:1.3)");
+
+
+
+            /******************************** CREATE ONE LINE OF OUR WRITTEN SCRIPT *******************************/
+
+            // // Change line to what we are trying to make
+            // String line = "Do you want to hear...";
+            // // String line = "Do you want to hear another story?";
+
+            // // Generate speech from the line
+            // AudioInputStream audio = mary.generateAudio(line);
+
+            // // Save to a WAV file
+            // File outputFile = new File ("./resources/sound/StoryConfirmation.wav");
+            // // File outputFile = new File ("./resources/sound/AnotherStory.wav");
+            // AudioSystem.write(audio, Type.WAVE, outputFile);
+
+            // System.out.println("Saved: " + outputFile.getName());
+
+
+
+            /************************ CREATE WAVE FILE FOR EACH LINE READ FROM A TEXT FILE ************************/
 
             // Read text file line by line
-            File inputFile = new File("TheLittleMatchGirl.txt");  // Change to your file
+            // File inputFile = new File("TheLittleMatchGirl.txt");
+            // File inputFile = new File("LittleRedRidingHood.txt");
+            File inputFile = new File("PussInBoots.txt");
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
 
             String line;
@@ -76,7 +83,9 @@ public class WriteWavFiles {
                     AudioInputStream audio = mary.generateAudio(line);
 
                     // Save to a WAV file (one file per line)
-                    File outputFile = new File("TLMG_" + lineNumber + ".wav");
+                    // File outputFile = new File("./resources/sound/TLMG_" + lineNumber + ".wav");
+                    // File outputFile = new File("./resources/sound/LRRH_" + lineNumber + ".wav");
+                    File outputFile = new File("./resources/sound/PIB_" + lineNumber + ".wav");
                     AudioSystem.write(audio, Type.WAVE, outputFile);
                     
                     System.out.println("Saved: " + outputFile.getName());
