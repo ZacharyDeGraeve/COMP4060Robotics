@@ -169,7 +169,7 @@ public class BedtimeBot {
         System.out.println("> Playing story line " + (playingLine-1));
         CPlayWave.PlayWave_wait(story[playingLine]);
         playingLine += 1;
-        return playingLine < 8;
+        return playingLine < story.length;
     }
 
     public boolean isGoodnightExecuted() {
