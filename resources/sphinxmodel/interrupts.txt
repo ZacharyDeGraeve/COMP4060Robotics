@@ -1,1 +1,2 @@
-hey /1e-10/
+pause the story /1e-65/
+stop the story /1e-65/

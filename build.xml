@@ -6,7 +6,8 @@
 
         <!--ip -->
         <!--- CONFIGURE THIS for your Sota -->
-        <property name="scp.server" value="192.168.100.199"/>  
+        <property name="scp.server" value="10.0.0.157"/>  
+        <!-- <property name="scp.server" value="192.168.100.199"/>   -->
         <!-- <property name="scp.server" value="10.127.49.213"/>    -->
          
         <!--scp credentials -->
@@ -74,7 +75,7 @@
         <target name="make_jars" depends="compile">
 
                 <!-- Make a target for each program -->
-                <antcall target="__make_jar">
+                <!-- <antcall target="__make_jar">
                         <param name="jar.class" value="sample4060.Sample" />
                         <param name="jar.name" value="sample4060-sample.jar" />
                 </antcall>
@@ -82,7 +83,7 @@
                 <antcall target="__make_jar">
                         <param name="jar.class" value="sample4060.MotorStatesLive" />
                         <param name="jar.name" value="sample4060-motorstateslive.jar" />
-                </antcall>
+                </antcall> -->
 
 
                 <!-- <antcall target="__make_jar">
@@ -90,51 +91,8 @@
                         <param name="jar.name" value="matrixhelp.jar" />
                 </antcall> -->
 
-                <antcall target="__make_jar">
-                        <param name="jar.class" value="sample4060.PocketSphinxkws" />
-                        <param name="jar.name" value="sample4060-sphinxkws.jar" />
-                </antcall>
-
-                <antcall target="__make_jar">
-                        <param name="jar.class" value="sample4060.PocketSphinxlm" />
-                        <param name="jar.name" value="sample4060-sphinxlm.jar" />
-                </antcall>
-                
-                
-                <antcall target="__make_jar">
-                        <param name="jar.class" value="sample4060.FaceDetection" />
-                        <param name="jar.name" value="sample4060-face.jar" />
-                </antcall>
-
-                <!-- <antcall target="__make_jar">
-                        <param name="jar.class" value="sample4060.SotaTestProgram" />
-                        <param name="jar.name" value="sample4060-sotaTest.jar" />
-                </antcall>
-
-                <antcall target="__make_jar">
-                        <param name="jar.class" value="jp.vstone.sotasample.RecordMotion" />
-                        <param name="jar.name" value="sample4060-recordMotion.jar" />
-                </antcall> -->
-
-                <antcall target="__make_jar">
-                        <param name="jar.class" value="sample4060.marysample" />
-                        <param name="jar.name" value="sample4060-marrytts.jar" />
-                </antcall>
-
-
-                <antcall target="__make_jar">
-                        <param name="jar.class" value="sample4060.marysample" />
-                        <param name="jar.name" value="sample4060-marrytts.jar" />
-                </antcall>
-
-                <!-- assignment 4 JARs -->
-                <antcall target="__make_jar">
-                        <param name="jar.class" value="AS4.Main" />
-                        <param name="jar.name" value="AS4.jar" />
-                </antcall>
-
                 <!-- assignment 3 JARs -->
-                <antcall target="__make_jar">
+                <!-- <antcall target="__make_jar">
                         <param name="jar.class" value="AS3Solution.AS3_1" />
                         <param name="jar.name" value="AS3_1.jar" />
                 </antcall>
@@ -157,6 +115,61 @@
                 <antcall target="__make_jar">
                         <param name="jar.class" value="AS3Solution.AS3_5" />
                         <param name="jar.name" value="AS3_5.jar" />
+                </antcall> -->
+
+                <!-- ============================== ASSIGNMENT 4 ============================== -->
+
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.PocketSphinxkws" />
+                        <param name="jar.name" value="sample4060-sphinxkws.jar" />
+                </antcall>
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.PocketSphinxlm" />
+                        <param name="jar.name" value="sample4060-sphinxlm.jar" />
+                </antcall>
+                
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.FaceDetection" />
+                        <param name="jar.name" value="sample4060-face.jar" />
+                </antcall> -->
+
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.SotaTestProgram" />
+                        <param name="jar.name" value="sample4060-sotaTest.jar" />
+                </antcall>
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="jp.vstone.sotasample.RecordMotion" />
+                        <param name="jar.name" value="sample4060-recordMotion.jar" />
+                </antcall> -->
+
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.marysample" />
+                        <param name="jar.name" value="sample4060-marrytts.jar" />
+                </antcall>
+
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.marysample" />
+                        <param name="jar.name" value="sample4060-marrytts.jar" />
+                </antcall> -->
+
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="sample4060.CameraSnapTest" />
+                        <param name="jar.name" value="sample4060-cam.jar" />
+                </antcall> -->
+
+                <!-- <antcall target="__make_jar">
+                        <param name="jar.class" value="jp.vstone.sotasample.FaceTrackingSample" />
+                        <param name="jar.name" value="FaceTrackingSample.jar" />
+                </antcall> -->
+
+                <!-- assignment 4 JARs -->
+
+                <antcall target="__make_jar">
+                        <param name="jar.class" value="AS4.Main" />
+                        <param name="jar.name" value="AS4.jar" />
                 </antcall>
 
                 <!-- put other programs here -->

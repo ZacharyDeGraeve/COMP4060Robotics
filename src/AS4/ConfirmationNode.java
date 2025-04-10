@@ -7,7 +7,7 @@ public class ConfirmationNode extends LeafTask<BedtimeBot> {
     @Override
     public Status execute() {
         System.out.println("Waiting for confirmation...");
-        if (getObject().waitForKeyword("confirmation_keywords.txt")) {
+        if (getObject().waitForYesOrNo("confirmation_keywords.txt")) {
             return Status.SUCCEEDED; // Moves on to TellStory
         } else {
             return Status.FAILED;  // Returns to StorySelectionNode

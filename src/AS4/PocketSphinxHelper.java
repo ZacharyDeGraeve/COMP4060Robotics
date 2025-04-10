@@ -57,8 +57,41 @@ public class PocketSphinxHelper {
             RecognitionResult result = sphinx.getRecognitionHypothesis(decoderPtr);
             if (!result.result.isEmpty()) {
                 sphinx.stopListening(decoderPtr);
-                System.out.println("Final: " + result.result);
+                System.out.println("YOU: " + result.result);
                 return true;
+            }
+        }
+    }
+
+    public boolean yesOrNo() {
+        sphinx.startListening(decoderPtr);
+        byte[] buffer = new byte[BUFFER_SIZE];
+    
+        // Define arrays of affirmative and negative responses
+        String[] affirmativeResponses = {"yes", "yeah", "yep", "correct", "affirmative", "sure", "okay", "sounds good"};
+        String[] negativeResponses = {"no", "nope", "negative", "not", "nevermind"};
+    
+        while (true) {
+            int bytesRead = microphone.read(buffer, 0, buffer.length);
+            sphinx.processAudio(decoderPtr, buffer, bytesRead);
+    
+            RecognitionResult result = sphinx.getRecognitionHypothesis(decoderPtr);
+            if (!result.result.isEmpty()) {
+                sphinx.stopListening(decoderPtr);
+                String recognizedText = result.result.toLowerCase().trim();
+                System.out.println("YOU: " + recognizedText);
+                
+                for (String response : affirmativeResponses) {
+                    if (recognizedText.contains(response)) {
+                        return true;
+                    }
+                }
+
+                for (String response : negativeResponses) {
+                    if (recognizedText.contains(response)) {
+                        return false;
+                    }
+                }
             }
         }
     }
