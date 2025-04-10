@@ -6,8 +6,7 @@ import com.badlogic.gdx.ai.btree.Task;
 public class GoodnightNode extends LeafTask<BedtimeBot> {
     @Override
     public Status execute() {
-        getObject().onLaunch("Goodnight! Sleep tight.");
-        getObject().setSleeping(true);
+        getObject().onLaunch(BedtimeBot.Greeting.GOODNIGHT);
         return Status.SUCCEEDED;
     }
 

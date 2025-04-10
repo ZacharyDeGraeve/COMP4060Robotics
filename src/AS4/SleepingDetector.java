@@ -9,30 +9,20 @@ import jp.vstone.camera.FaceDetectResult;
 public class SleepingDetector {
 
     static final String TAG = "SleepingDetector";
-    static final int BLINK_THRESHOLD = 40;  
+    static final int BLINK_THRESHOLD = 50;  
     static final long SLEEP_THRESHOLD_MS = 5000;
     
     private CRoboCamera cam;
+    private CSotaMotion motion;
     private long eyesClosedStartTime = 0;
     private boolean eyesPreviouslyClosed = false;
     
-    public SleepingDetector() {
+    public SleepingDetector(CSotaMotion motion) {
         CRobotUtil.Log(TAG, "Initializing SleepingDetector");
-        CRobotMem mem = new CRobotMem();
-        CSotaMotion motion = new CSotaMotion(mem);
-        
-        if(mem.Connect()) {
-            motion.InitRobot_Sota();
-            CRobotUtil.Log(TAG, "Connected to robot, firmware: " + mem.FirmwareRev.get());
-            
-            cam = new CRoboCamera("/dev/video0", motion);
-            
-            cam.setEnableBlinkDetect(true);
-            
-            cam.StartFaceDetect();
-        } else {
-            CRobotUtil.Log(TAG, "Failed to connect to robot");
-        }
+        this.motion = motion;
+        cam = new CRoboCamera("/dev/video0", motion);
+        cam.setEnableBlinkDetect(true);
+        cam.StartFaceDetect();
     }
 
     public boolean isPersonSleeping() {
@@ -78,6 +68,7 @@ public class SleepingDetector {
         } else {
             if (eyesPreviouslyClosed) {
                 CRobotUtil.Log(TAG, "Lost face detection, resetting timer");
+                cam.StartFaceDetect();
                 eyesPreviouslyClosed = false;
             }
         }

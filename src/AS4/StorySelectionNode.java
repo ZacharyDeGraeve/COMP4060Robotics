@@ -3,6 +3,8 @@ package AS4;
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 
+import AS4.BedtimeBot.AskQuestion;
+
 public class StorySelectionNode extends LeafTask<BedtimeBot> {
     @Override
     public Status execute() {
@@ -12,7 +14,7 @@ public class StorySelectionNode extends LeafTask<BedtimeBot> {
             e.printStackTrace();
         }
         
-        getObject().askUser("Would you like to listen to this story?");
+        getObject().askUser(BedtimeBot.AskQuestion.SELECT);
         return Status.SUCCEEDED;
     }
 

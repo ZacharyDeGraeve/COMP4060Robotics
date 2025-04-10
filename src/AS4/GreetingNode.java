@@ -9,7 +9,8 @@ public class GreetingNode extends LeafTask<BedtimeBot> {
     @Override
     public Status execute() {
         if (!hasGreeted) {
-            getObject().onLaunch("Hi there!");
+            getObject().turnOnEyes();
+            getObject().onLaunch(BedtimeBot.Greeting.HI);
             hasGreeted = true;
         }
         return Status.SUCCEEDED;

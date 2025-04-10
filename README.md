@@ -1,1 +1,2 @@
-# Sota-Controller
+# Acknowlegments
+We sourced our three stories used in our software from The Project Gutenberg eBook of Favorite Fairy Tales sourced from https://www.gutenberg.org/ebooks/20748. We would like to credit Bruce Albrecht, Jacqueline Jeremy and the Online Distributed Proofreading Team at https://www.pgdp.net who produced this work. 

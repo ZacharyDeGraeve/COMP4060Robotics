@@ -6,9 +6,9 @@
 
         <!--ip -->
         <!--- CONFIGURE THIS for your Sota -->
-        <property name="scp.server" value="10.0.0.157"/>  
+        <!-- <property name="scp.server" value="10.0.0.157"/>   -->
         <!-- <property name="scp.server" value="192.168.100.199"/>   -->
-        <!-- <property name="scp.server" value="10.127.49.213"/>    -->
+        <property name="scp.server" value="10.127.50.254"/>   
          
         <!--scp credentials -->
         <property name="scp.edison.user" value="root"  />

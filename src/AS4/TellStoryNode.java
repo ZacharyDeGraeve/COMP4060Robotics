@@ -9,13 +9,7 @@ public class TellStoryNode extends LeafTask<BedtimeBot> {
 
     @Override
     public void start() {
-        try {
-            getObject().playStory();
-            System.out.println("> Starting to tell story...");
-        } catch (Exception e) {
-            System.err.println("Error starting story playback: " + e.getMessage());
-            e.printStackTrace();
-        }
+        System.out.println("> Starting to tell story...");
 
         /*
         interruptListener = new Thread(() -> {
@@ -39,9 +33,9 @@ public class TellStoryNode extends LeafTask<BedtimeBot> {
             interrupted = false;
         }
         */
-
+            
         // Check if the story is still playing
-        if (!getObject().isStoryPlaying()) {
+        if (!getObject().playStory()) {
             System.out.println("> Story playback has finished");
             return Status.SUCCEEDED; // Story is done, move to the next node
         }
